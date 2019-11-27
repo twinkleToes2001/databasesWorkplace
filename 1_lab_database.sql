@@ -1,4 +1,3 @@
-/*first*/
 CREATE TABLE t_messure (
     id_messure INT NOT NULL, 
     names VARCHAR(40) NOT NULL,
@@ -25,9 +24,9 @@ CREATE TABLE t_inprice (
 CREATE TABLE t_caterer (
     id_caterer INT NOT NULL,
     names VARCHAR(100) NOT NULL,
-    adress VARCHAR(100) NOT NULL,
-    phone VARCHAR(10) NOT NULL,
-    fax VARCHAR(20) NOT NULL,
+    address VARCHAR(100) NOT NULL,
+    phone VARCHAR(100) NOT NULL,
+    fax VARCHAR(100) NOT NULL,
     CONSTRAINT pk_caterer PRIMARY KEY (id_caterer)
 );
 
@@ -43,7 +42,7 @@ CREATE TABLE t_supply (
     id_store INT NOT NULL,
     id_material INT NOT NULL,
     supply_date DATE NOT NULL,
-    volume INT NOT NULL,
+    value INT NOT NULL,
     CONSTRAINT pk_supply PRIMARY KEY (id_supply),
     CONSTRAINT fk_supply_caterer FOREIGN KEY (id_caterer)
         REFERENCES t_caterer (id_caterer),
@@ -56,7 +55,7 @@ CREATE TABLE t_supply (
 CREATE TABLE t_surplus (
     id_material INT NOT NULL,
     id_store INT NOT NULL,
-    volume INT NOT NULL,
+    value INT NOT NULL,
     CONSTRAINT fk_surplus_material FOREIGN KEY (id_material)
         REFERENCES t_material (id_material),
     CONSTRAINT fk_surplus_store FOREIGN KEY (id_store)
@@ -65,8 +64,8 @@ CREATE TABLE t_surplus (
 
 CREATE TABLE t_employer (
     id_employer INT NOT NULL,
-    surname VARCHAR(15) NOT NULL,
-    names VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    firs_name VARCHAR(50) NOT NULL,
     father_name VARCHAR(50) NOT NULL,
     CONSTRAINT pk_employer PRIMARY KEY (id_employer)
 );
@@ -97,7 +96,7 @@ CREATE TABLE t_deliver (
 
 /*second*/
 ALTER TABLE t_caterer
-DROP adress,
+DROP address,
 ADD legal_address text,
 ADD fact_address text,
 ADD mail varchar(250);
