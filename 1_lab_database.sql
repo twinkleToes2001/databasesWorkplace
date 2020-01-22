@@ -1,22 +1,24 @@
-CREATE TABLE t_messure (
-    id_messure INT NOT NULL, 
+CREATE TABLE t_measure (
+    id_measure INT NOT NULL, 
     names VARCHAR(40) NOT NULL,
-    CONSTRAINT pk_messure PRIMARY KEY (id_messure)
+    CONSTRAINT pk_measure PRIMARY KEY (id_measure)
 );
 
 CREATE TABLE t_material (
     id_material INT NOT NULL,
     names VARCHAR(100) NOT NULL,
-    id_messure INT NOT NULL,
+    id_measure INT NOT NULL,
     CONSTRAINT pk_material PRIMARY KEY (id_material),
-    CONSTRAINT fk_material_messure FOREIGN KEY (id_messure)
-        REFERENCES t_messure (id_messure)
+    CONSTRAINT fk_material_measure FOREIGN KEY (id_measure)
+        REFERENCES t_measure (id_measure)
 );
 
 CREATE TABLE t_inprice (
+    id_inprice INT NOT NULL,
     id_material INT NOT NULL,
     price_date DATE NOT NULL,
     price NUMERIC(10, 2) CHECK (price >= 0),
+    CONSTRAINT pk_inprice PRIMARY KEY (id_inprice),
     CONSTRAINT fk_inprice_material FOREIGN KEY (id_material)
         REFERENCES t_material (id_material)
 );
@@ -53,9 +55,11 @@ CREATE TABLE t_supply (
 );
 
 CREATE TABLE t_surplus (
+    id_surplus INT NOT NULL,
     id_material INT NOT NULL,
     id_store INT NOT NULL,
     value INT NOT NULL,
+    CONSTRAINT pk_surplus PRIMARY KEY (id_surplus),
     CONSTRAINT fk_surplus_material FOREIGN KEY (id_material)
         REFERENCES t_material (id_material),
     CONSTRAINT fk_surplus_store FOREIGN KEY (id_store)
@@ -65,7 +69,7 @@ CREATE TABLE t_surplus (
 CREATE TABLE t_employer (
     id_employer INT NOT NULL,
     last_name VARCHAR(50) NOT NULL,
-    firs_name VARCHAR(50) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
     father_name VARCHAR(50) NOT NULL,
     CONSTRAINT pk_employer PRIMARY KEY (id_employer)
 );
@@ -96,23 +100,23 @@ CREATE TABLE t_deliver (
 
 /*second*/
 ALTER TABLE t_caterer
-DROP address,
-ADD legal_address text,
-ADD fact_address text,
-ADD mail varchar(250);
+    DROP address,
+    ADD legal_address text,
+    ADD fact_address text,
+    ADD mail varchar(250);
 
 /*third*/
 ALTER TABLE t_inprice
-DROP CONSTRAINT fk_inprice_material,
-ADD CONSTRAINT pk_inprice_price_date 
-PRIMARY KEY (price_date, id_material);
+    DROP CONSTRAINT fk_inprice_material,
+    ADD CONSTRAINT pk_inprice_price_date 
+    PRIMARY KEY (price_date, id_material);
 
 /*fouth*/
 CREATE TABLE t_group
 (
 	id_group int NOT NULL,
 	id_material int NOT NULL,
-	group_name VARCHAR(20) NOT NULL,
+	group_name text NOT NULL,
 	CONSTRAINT fk_group_material FOREIGN KEY (id_material) 
         REFERENCES t_material (id_material) ON DELETE SET NULL
 );
